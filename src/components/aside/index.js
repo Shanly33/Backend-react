@@ -14,7 +14,7 @@ const Aside = props => {
   //菜单数据处理
   const getItems = (items, list = []) => {
     items.map(item => {
-      list.push({
+      return list.push({
         key: item.path,
         ...(item.icon ? { icon: iconToElement(item?.icon) } : []),
         label: item.label,

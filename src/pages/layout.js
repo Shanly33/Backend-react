@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
-import { Button, Layout, Menu, theme } from 'antd'
+import { Layout, theme } from 'antd'
 import Aside from '../components/aside'
+import MyHeader from '../components/header'
 import { Outlet } from 'react-router-dom'
 
 const { Header, Sider, Content } = Layout
@@ -15,23 +15,7 @@ const MyLayout = () => {
     <Layout className='main-container'>
       <Aside collapsed={collapsed} />
       <Layout>
-        <Header
-          style={{
-            padding: 0,
-            background: colorBgContainer
-          }}
-        >
-          <Button
-            type='text'
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
-            style={{
-              fontSize: '16px',
-              width: 64,
-              height: 64
-            }}
-          />
-        </Header>
+        <MyHeader collapsed={collapsed} setCollapsed={setCollapsed} />
         <Content
           style={{
             margin: '24px 16px',
