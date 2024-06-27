@@ -2,11 +2,14 @@ import React, { useState } from 'react'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { Button, Layout, Avatar, Dropdown } from 'antd'
 import './index.css'
+import { useDispatch } from 'react-redux'
+import { changeCollapse } from '../../store/reducers/tab'
 
 const { Header } = Layout
 
 const MyHeader = props => {
-  const { collapsed, setCollapsed } = props
+  const { collapsed, setCollapsed, Collapsed } = props
+  const dispatch = useDispatch()
 
   //登出
   const logout = () => {}
@@ -30,12 +33,17 @@ const MyHeader = props => {
     }
   ]
 
+  const changeCollapsed = () => {
+    dispatch(changeCollapse())
+  }
+
   return (
     <Header className='header-container'>
       <Button
         type='text'
-        icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-        onClick={() => setCollapsed(!collapsed)}
+        icon={Collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+        // onClick={() => setCollapsed(!collapsed)}
+        onClick={changeCollapsed}
         style={{
           fontSize: '16px',
           width: 64,

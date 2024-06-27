@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import * as Icon from '@ant-design/icons'
 import { Layout, Menu } from 'antd'
 import menuList from '../../config'
+import { useNavigate } from 'react-router-dom'
 
 const { Sider } = Layout
 
 const Aside = props => {
-  const { collapsed } = props
+  const { collapsed, Collapsed } = props
+  const navigate = useNavigate()
 
   //动态获取icon
   const iconToElement = name => React.createElement(Icon[name])
@@ -24,9 +26,13 @@ const Aside = props => {
     return list
   }
 
+  const clickMenu = e => {
+    navigate(e.key)
+  }
+
   return (
-    <Sider trigger={null} collapsible collapsed={collapsed}>
-      <h3 className='app-name'>通用后台管理系统</h3>
+    <Sider trigger={null} collapsible collapsed={Collapsed}>
+      <h3 className='app-name'>{Collapsed ? '后台' : '通用后台管理系统'}</h3>
       <Menu
         theme='dark'
         mode='inline'
@@ -35,6 +41,7 @@ const Aside = props => {
         style={{
           height: '100%'
         }}
+        onClick={clickMenu}
       />
     </Sider>
   )
