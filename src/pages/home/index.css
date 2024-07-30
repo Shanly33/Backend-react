@@ -85,3 +85,7 @@
   text-align: center;
   color: #999;
 }
+
+.home .chart {
+  display: flex;
+}

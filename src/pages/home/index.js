@@ -1,18 +1,61 @@
 import React, { useEffect, useState } from 'react'
 import { getData } from './services'
-import { Col, Row, Card, Space, Table, Tag } from 'antd'
+import { Col, Row, Card, Table } from 'antd'
 import './index.css'
 import * as Icon from '@ant-design/icons'
+import MyEcharts from '../../components/echarts'
 
 const Home = () => {
   const [homeData, setHomeData] = useState({})
   const [tableData, setTableData] = useState([])
   const [countData, setCountData] = useState([])
+  const [echartData, setEchartData] = useState({})
   useEffect(() => {
     getData().then(res => {
-      console.log(res.data.data)
-      setTableData(res.data.data.tableData)
-      setCountData(res.data.data.countData)
+      console.log(111, res.data.data)
+      const { tableData, countData, orderData, userData, videoData } = res.data.data
+      setTableData(tableData)
+      setCountData(countData)
+      //折线图series数据组装
+      const arr = Object.keys(orderData.data[0])
+      const series = []
+      arr.forEach(key => {
+        series.push({
+          name: key,
+          type: 'line',
+          data: orderData.data.map(item => item[key])
+        })
+      })
+      setEchartData({
+        order: {
+          xData: orderData.date,
+          series
+        },
+        user: {
+          xData: userData.map(item => item.date),
+          series: [
+            {
+              name: '新增用户',
+              type: 'bar',
+              data: userData.map(item => item.new)
+            },
+            {
+              name: '活跃用户',
+              type: 'bar',
+              data: userData.map(item => item.active)
+            }
+          ]
+        },
+        video: {
+          series: [
+            {
+              data: videoData,
+              type: 'pie',
+              radius: '50%'
+            }
+          ]
+        }
+      })
     })
   }, [])
 
@@ -84,8 +127,21 @@ const Home = () => {
             )
           })}
         </div>
-        <div></div>
-        <div></div>
+        {echartData?.order && (
+          <MyEcharts chartData={echartData?.order} style={{ height: '270px' }} />
+        )}
+        <div className='chart'>
+          {echartData?.user && (
+            <MyEcharts chartData={echartData?.user} style={{ height: '220px', width: '50%' }} />
+          )}
+          {echartData?.video && (
+            <MyEcharts
+              chartData={echartData?.video}
+              isAxisChart={false}
+              style={{ height: '220px', width: '50%' }}
+            />
+          )}
+        </div>
       </Col>
     </Row>
   )
