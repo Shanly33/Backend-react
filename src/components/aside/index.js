@@ -3,7 +3,7 @@ import * as Icon from '@ant-design/icons'
 import { Layout, Menu } from 'antd'
 import menuList from '../../config'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { selectTagList } from '../../store/reducers/tab'
 
 const { Sider } = Layout
@@ -12,6 +12,7 @@ const Aside = props => {
   const { collapsed, Collapsed } = props
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const location = useLocation()
 
   //添加数据到store
   const setTagList = val => {
@@ -61,7 +62,7 @@ const Aside = props => {
       <Menu
         theme='dark'
         mode='inline'
-        defaultSelectedKeys={['1']}
+        selectedKeys={[location.pathname]}
         items={getItems(menuList)}
         style={{
           height: '100%'
