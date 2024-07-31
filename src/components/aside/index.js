@@ -2,13 +2,21 @@ import React, { useState } from 'react'
 import * as Icon from '@ant-design/icons'
 import { Layout, Menu } from 'antd'
 import menuList from '../../config'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { selectTagList } from '../../store/reducers/tab'
 
 const { Sider } = Layout
 
 const Aside = props => {
   const { collapsed, Collapsed } = props
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  //添加数据到store
+  const setTagList = val => {
+    dispatch(selectTagList(val))
+  }
 
   //动态获取icon
   const iconToElement = name => React.createElement(Icon[name])
@@ -27,6 +35,23 @@ const Aside = props => {
   }
 
   const clickMenu = e => {
+    let data
+    menuList.forEach(item => {
+      if (item.path === e.keyPath[e.keyPath.length - 1]) {
+        data = item
+        //如果有二级菜单
+        if (e.keyPath.length > 1) {
+          data = item.children.find(child => {
+            return child.path === e.key
+          })
+        }
+      }
+    })
+    setTagList({
+      path: data.path,
+      name: data.name,
+      label: data.label
+    })
     navigate(e.key)
   }
 

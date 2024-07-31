@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Layout, theme } from 'antd'
 import Aside from '../components/aside'
 import MyHeader from '../components/header'
+import MyTag from '../components/tag'
 import { Outlet } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
@@ -20,6 +21,7 @@ const MyLayout = () => {
       <Aside collapsed={collapsed} Collapsed={Collapsed} />
       <Layout>
         <MyHeader collapsed={collapsed} Collapsed={Collapsed} setCollapsed={setCollapsed} />
+        <MyTag></MyTag>
         <Content
           style={{
             margin: '24px 16px',

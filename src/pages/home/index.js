@@ -6,7 +6,6 @@ import * as Icon from '@ant-design/icons'
 import MyEcharts from '../../components/echarts'
 
 const Home = () => {
-  const [homeData, setHomeData] = useState({})
   const [tableData, setTableData] = useState([])
   const [countData, setCountData] = useState([])
   const [echartData, setEchartData] = useState({})

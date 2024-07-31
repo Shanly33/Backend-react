@@ -137,6 +137,11 @@ body {
 .main-container {
   min-height: calc(100vh - 64px);
 }
+
+.main-container .ant-layout-content {
+  margin: 0px !important;
+}
+
 .main-container .app-name {
   background-color: #001520;
   text-align: center;
