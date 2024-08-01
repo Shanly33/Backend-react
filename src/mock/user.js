@@ -28,7 +28,7 @@ for (let i = 0; i < count; i++) {
   )
 }
 
-export default {
+const userApi = {
   /**
    * 获取列表
    * 参数 name,page,limit;name可以不填，page,limit有默认值。
@@ -51,7 +51,7 @@ export default {
       count: mockList.length,
       list: pageList
     }
-  }
+  },
   /**
    * 增加用户
    * @param name
@@ -60,6 +60,52 @@ export default {
    * @param birth
    * @param sex
    * @return {{code:number,data:{message:string}}}
-   *
    */
+  createUser: config => {
+    const { name, addr, age, birth, sex } = JSON.parse(config.body)
+    List.unshift({
+      id: Mock.Random.guid(),
+      name: name,
+      age: age,
+      addr: addr,
+      birth: birth,
+      sex: sex
+    })
+    return {
+      code: 200,
+      data: {
+        message: '添加成功'
+      }
+    }
+  },
+  /**
+   * 编辑用户
+   * @param name
+   * @param addr
+   * @param age
+   * @param birth
+   * @param sex
+   * @return {{code:number,data:{message:string}}}
+   */
+  updateUser: config => {
+    const { id, name, addr, age, birth, sex } = JSON.parse(config.body)
+    const sex_num = parseInt(sex)
+    List.some(item => {
+      if (item.id === id) {
+        item.name = name
+        item.age = age
+        item.addr = addr
+        item.birth = birth
+        item.sex = sex_num
+        return true
+      }
+    })
+    return {
+      code: 200,
+      data: {
+        message: '编辑成功'
+      }
+    }
+  }
 }
+export default userApi

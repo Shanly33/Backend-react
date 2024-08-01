@@ -5,3 +5,5 @@ import userApi from '../mock/user'
 //拦截接口
 Mock.mock(/home\/getData/, homeApi)
 Mock.mock(/user\/getUser/, userApi.getUserList)
+Mock.mock(/user\/createUser/, 'post', userApi.createUser)
+Mock.mock(/user\/updateUser/, 'post', userApi.updateUser)

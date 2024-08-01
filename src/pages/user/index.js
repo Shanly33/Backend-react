@@ -9,11 +9,13 @@ import {
   Modal,
   InputNumber,
   Select,
-  DatePicker
+  DatePicker,
+  message
 } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import './index.css'
-import { getUser } from './services'
+import { getUser, createUser, updateUser } from './services'
+import dayjs from 'dayjs'
 
 const User = () => {
   const [filterParam, setFilterParam] = useState({
@@ -99,7 +101,24 @@ const User = () => {
     setIsModalOpen(true)
   }
 
-  const handleSubmit = () => {}
+  const handleSubmit = () => {
+    form
+      .validateFields()
+      .then(value => {
+        value.birth = dayjs(value.birth).format('YYYY-MM-DD')
+        if (method === 'edit') {
+        } else {
+          createUser(value).then(res => {
+            setIsModalOpen(false)
+            getTableList()
+            message.success(res.data.data.message)
+          })
+        }
+      })
+      .catch(e => {
+        console.log(e)
+      })
+  }
 
   const onFinish = e => {
     setFilterParam({
@@ -135,7 +154,6 @@ const User = () => {
       >
         <Form
           form={form}
-          name='basic'
           labelCol={{
             span: 6
           }}
