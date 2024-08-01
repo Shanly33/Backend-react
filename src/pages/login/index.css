@@ -1,0 +1,21 @@
+.login-box {
+  width: 350px;
+  border: 1px solid #eaeaea;
+  margin: 180px auto;
+  padding: 35px 35px 15px 35px;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 0 25px #cac6c6;
+  box-sizing: border-box;
+}
+
+.login-box .title {
+  text-align: center;
+  margin-bottom: 40px;
+  color: #505458;
+  font-size: 20px;
+}
+
+.login-box .login-button {
+  text-align: center;
+}

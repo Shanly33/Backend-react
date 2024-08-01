@@ -5,6 +5,7 @@ import Mail from '../pages/mail'
 import User from '../pages/user'
 import pageOne from '../pages/other/pageOne'
 import pageTwo from '../pages/other/pageTwo'
+import Login from '../pages/login'
 
 const routes = [
   {
@@ -42,6 +43,10 @@ const routes = [
         ]
       }
     ]
+  },
+  {
+    path: 'login',
+    Component: Login
   }
 ]
 
