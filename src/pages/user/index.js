@@ -82,6 +82,7 @@ const User = () => {
 
   const handleCancel = () => {
     setIsModalOpen(false)
+    form.resetFields()
   }
 
   const handleDelete = () => {}
@@ -96,7 +97,12 @@ const User = () => {
     getTableList()
   }, [])
 
-  const handleModal = method => {
+  const handleModal = (method, data) => {
+    if (method === 'edit') {
+      const cloneData = JSON.parse(JSON.stringify(data))
+      cloneData.birth = dayjs(cloneData.birth)
+      form.setFieldsValue(cloneData)
+    }
     setMethod(method)
     setIsModalOpen(true)
   }
@@ -107,9 +113,14 @@ const User = () => {
       .then(value => {
         value.birth = dayjs(value.birth).format('YYYY-MM-DD')
         if (method === 'edit') {
+          updateUser(value).then(res => {
+            handleCancel()
+            getTableList()
+            message.success(res.data.data.message)
+          })
         } else {
           createUser(value).then(res => {
-            setIsModalOpen(false)
+            handleCancel()
             getTableList()
             message.success(res.data.data.message)
           })
@@ -162,6 +173,11 @@ const User = () => {
           }}
           labelAlign='left'
         >
+          {method === 'edit' && (
+            <Form.Item name='id' hidden>
+              <Input />
+            </Form.Item>
+          )}
           <Form.Item
             label='姓名'
             name='name'
