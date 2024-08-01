@@ -1,3 +1,4 @@
+import { message } from 'antd'
 import Mock from 'mockjs'
 
 function param2Obj(url) {
@@ -104,6 +105,26 @@ const userApi = {
       code: 200,
       data: {
         message: '编辑成功'
+      }
+    }
+  },
+  /**
+   * 删除用户
+   * @param id
+   * @return {*}
+   */
+  deleteUser: config => {
+    const { id } = JSON.parse(config.body)
+    if (!id) {
+      return {
+        code: 400,
+        message: '删除失败'
+      }
+    } else {
+      List = List.filter(item => item.id !== id)
+      return {
+        code: 200,
+        message: '删除成功'
       }
     }
   }

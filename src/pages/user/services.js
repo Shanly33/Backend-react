@@ -11,3 +11,7 @@ export const createUser = async data => {
 export const updateUser = async data => {
   return post('/user/updateUser', data)
 }
+
+export const deleteUser = async data => {
+  return post('/user/deleteUser', data)
+}

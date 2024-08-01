@@ -14,7 +14,7 @@ import {
 } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import './index.css'
-import { getUser, createUser, updateUser } from './services'
+import { getUser, createUser, updateUser, deleteUser } from './services'
 import dayjs from 'dayjs'
 
 const User = () => {
@@ -85,7 +85,18 @@ const User = () => {
     form.resetFields()
   }
 
-  const handleDelete = () => {}
+  const handleDelete = data => {
+    const { id } = data
+    deleteUser({ id }).then(res => {
+      console.log(res.data)
+      if (res.data.code === 200) {
+        getTableList()
+        message.success(res.data.message)
+      } else {
+        message.error(res.data.message)
+      }
+    })
+  }
 
   const getTableList = () => {
     getUser(filterParam).then(res => {
@@ -96,6 +107,10 @@ const User = () => {
   useEffect(() => {
     getTableList()
   }, [])
+
+  useEffect(() => {
+    getTableList()
+  }, [filterParam])
 
   const handleModal = (method, data) => {
     if (method === 'edit') {
@@ -133,7 +148,7 @@ const User = () => {
 
   const onFinish = e => {
     setFilterParam({
-      name: e.name
+      name: e.keyword
     })
   }
   return (
